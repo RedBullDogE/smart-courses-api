@@ -16,5 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 
-urlpatterns = [path("admin/", admin.site.urls), path("api/", include("api.urls"))]
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Smart Courses API",
+        default_version="v0.1a",
+        description="MVP application with a set of CRUD endpoints for managing course entities.",
+        contact=openapi.Contact(email="drew.krvns@gmail.com"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
+
+urlpatterns = [
+    path("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),
+]

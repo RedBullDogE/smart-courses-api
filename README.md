@@ -4,6 +4,8 @@ MVP application with a set of CRUD endpoints for managing course entities.
 
 Code was formatted with black, linted with .flake8 and covered in tests.
 
+OpenAPI Documentation file is also available [here](/doc.yml) or by URL (http://localhost:8000/docs/)
+
 ## Stack
 
 * **Django** (*DRF*)

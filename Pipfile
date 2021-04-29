@@ -13,6 +13,7 @@ isort = "*"
 pre-commit = "*"
 django-filter = "*"
 black = "*"
+drf-yasg = "*"
 
 [requires]
 python_version = "3.8"

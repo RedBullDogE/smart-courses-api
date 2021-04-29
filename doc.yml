@@ -1,0 +1,220 @@
+swagger: '2.0'
+info:
+  title: Smart Courses API
+  description: MVP application with a set of CRUD endpoints for managing course entities.
+  contact:
+    email: drew.krvns@gmail.com
+  version: v0.1a
+host: '127.0.0.1:8000'
+schemes:
+  - http
+basePath: /api
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+  - Basic: []
+paths:
+  /courses/:
+    get:
+      operationId: courses_list
+      description: Get paginated list of existing courses. Allows us to search courses by title and filter by date.
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: date_start__gte
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: date_start__lte
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: date_start
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: date_end__gte
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: date_end__lte
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: date_end
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/CourseShort'
+      tags:
+        - courses
+    post:
+      operationId: courses_create
+      description: 'Add a new course with specified fields (title, start date, end date and number of lectures).'
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseDetails'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseDetails'
+      tags:
+        - courses
+    parameters: []
+  '/courses/{id}/':
+    get:
+      operationId: courses_read
+      description: Get detailed information about specific course.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseDetails'
+      tags:
+        - courses
+    put:
+      operationId: courses_update
+      description: Update course information (replace the whole entity with a new one).
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseDetails'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseDetails'
+      tags:
+        - courses
+    patch:
+      operationId: courses_partial_update
+      description: Update course fields (change only specified fields).
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseDetails'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseDetails'
+      tags:
+        - courses
+    delete:
+      operationId: courses_delete
+      description: Delete a course by its id.
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - courses
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this course.
+        required: true
+        type: integer
+definitions:
+  CourseShort:
+    required:
+      - title
+      - date_start
+      - date_end
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 128
+        minLength: 1
+      date_start:
+        title: Date start
+        type: string
+        format: date
+      date_end:
+        title: Date end
+        type: string
+        format: date
+  CourseDetails:
+    required:
+      - title
+      - date_start
+      - date_end
+      - lecture_number
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 128
+        minLength: 1
+      date_start:
+        title: Date start
+        type: string
+        format: date
+      date_end:
+        title: Date end
+        type: string
+        format: date
+      lecture_number:
+        title: Lecture number
+        type: integer

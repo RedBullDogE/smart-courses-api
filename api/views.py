@@ -11,6 +11,18 @@ class CourseViewSet(ModelViewSet):
     """
     Set of CRUD views for Course model. Also provides searching by title field
     and date filter (supports both exact matches and date ranges).
+
+    create: Add a new course with specified fields (title, start date, end date and number of lectures).
+
+    list: Get paginated list of existing courses. Allows us to search courses by title and filter by date.
+
+    retrieve: Get detailed information about specific course.
+
+    update: Update course information (replace the whole entity with a new one).
+
+    partial_update: Update course fields (change only specified fields).
+
+    destroy: Delete a course by its id.
     """
 
     queryset = Course.objects.all()
