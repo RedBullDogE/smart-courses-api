@@ -9,9 +9,13 @@ verify_ssl = true
 django = "*"
 djangorestframework = "*"
 flake8 = "*"
-black = "*"
 isort = "*"
 pre-commit = "*"
+django-filter = "*"
+black = "*"
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
